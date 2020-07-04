@@ -11,8 +11,7 @@ git:
 addons:
   sonarcloud:
     organization: "calvinhuynh-github"
-    token:
-        secure: "$key" # encrypted value of your token
+    token: "$key"
   
 script:
 - ./gradlew build sonarqube
