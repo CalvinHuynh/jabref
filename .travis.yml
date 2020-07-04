@@ -2,7 +2,7 @@ language: java
 install: skip
 
 os: linux
-dist: latest
+dist: xenial
 jdk: openjdk14
 
 git:
