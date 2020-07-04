@@ -1,0 +1,18 @@
+language: java
+install: skip
+
+os: linux
+dist: latest
+jdk: openjdk14
+
+git:
+  depth: false
+    
+addons:
+  sonarcloud:
+    organization: "calvinhuynh-github"
+    token:
+        secure: "$key" # encrypted value of your token
+  
+script:
+- ./gradlew build sonarqube
