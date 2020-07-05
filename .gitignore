@@ -478,3 +478,6 @@ lib/ojdbc.jar
 
 # ignore vscode IDE
 .vscode
+
+# Ignore this specific file to prevent builds from failing
+src/main/java/org/jabref/gui/logging/plugins/Log4jPlugins.java
