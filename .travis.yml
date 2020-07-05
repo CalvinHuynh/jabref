@@ -5,6 +5,9 @@ os: linux
 dist: xenial
 jdk: openjdk14
 
+env:
+  global:
+  - PGPORT=5432
 git:
   depth: false
     
@@ -12,6 +15,7 @@ addons:
   sonarcloud:
     organization: "calvinhuynh-github"
     token: "$key"
-  
+  postgresql: "9.4"
+
 script:
-- ./gradlew build sonarqube
+- ./gradlew assemble jacocoTestReport sonarqube
