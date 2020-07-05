@@ -18,9 +18,4 @@ addons:
   postgresql: "9.4"
 
 script:
-- ./gradlew assemble jacocoTestReport sonarqubelvinHuynh committed 4168e68 4 hours ago
-Git stats
-
-15,206 commits
-19 branches
-42 tags 
+- ./gradlew assemble jacocoTestReport sonarqube
