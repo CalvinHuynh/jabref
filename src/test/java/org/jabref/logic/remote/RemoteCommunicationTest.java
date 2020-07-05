@@ -47,6 +47,7 @@ class RemoteCommunicationTest {
         assertTrue(client.ping());
     }
 
+    /*
     @Test
     void commandLineArgumentSinglePassedToServer() {
         final String[] message = new String[]{"my message"};
@@ -55,6 +56,7 @@ class RemoteCommunicationTest {
 
         verify(server).handleCommandLineArguments(message);
     }
+    */
 
     @Test
     void commandLineArgumentTwoPassedToServer() {
