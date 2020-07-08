@@ -159,7 +159,7 @@ public class CitationKeyPatternPanel extends Pane {
         }
     }
 
-    public Node getPanel() {
+    public Node getGridPane() {
         return gridPane;
     }
 }

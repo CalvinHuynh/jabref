@@ -28,7 +28,7 @@ public class CitationKeyPatternDialog extends BaseDialog<Void> {
 
         this.setTitle(Localization.lang("Citation key patterns"));
 
-        this.getDialogPane().setContent(citationKeyPatternPanel.getPanel());
+        this.getDialogPane().setContent(citationKeyPatternPanel.getGridPane());
         this.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
 
         this.setResultConverter(button -> {

@@ -58,7 +58,7 @@ public class CleanupAction extends SimpleCommand {
         modifiedEntriesCount = 0;
 
         Optional<CleanupPreset> chosenPreset = new CleanupDialog(
-                stateManager.getActiveDatabase().get(),
+                stateManager.getActiveDatabase().isPresent() ? stateManager.getActiveDatabase().get() : null,
                 preferences.getCleanupPreset(),
                 preferences.getFilePreferences()).showAndWait();
 

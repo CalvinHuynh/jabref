@@ -143,7 +143,8 @@ public class BasePanel extends StackPane {
 
         if (databaseLocation == DatabaseLocation.LOCAL) {
             if (this.bibDatabaseContext.getDatabasePath().isPresent()) {
-                title.append(this.bibDatabaseContext.getDatabasePath().get().getFileName());
+                Path databasePath = this.bibDatabaseContext.getDatabasePath().get();
+                title.append(databasePath.getFileName());
                 if (isModified() && !isAutosaveEnabled) {
                     title.append("*");
                 }
@@ -533,7 +534,8 @@ public class BasePanel extends StackPane {
         } else if (baseChanged && !nonUndoableChange) {
             baseChanged = false;
             if (getBibDatabaseContext().getDatabasePath().isPresent()) {
-                frame.setTabTitle(this, getTabTitle(), getBibDatabaseContext().getDatabasePath().get().toAbsolutePath().toString());
+                Path databasePath = getBibDatabaseContext().getDatabasePath().get();
+                frame.setTabTitle(this, getTabTitle(), databasePath.toAbsolutePath().toString());
             } else {
                 frame.setTabTitle(this, Localization.lang("untitled"), null);
             }

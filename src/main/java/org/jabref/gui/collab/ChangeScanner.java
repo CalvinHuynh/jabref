@@ -1,6 +1,7 @@
 package org.jabref.gui.collab;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +39,11 @@ public class ChangeScanner {
             // Parse the modified file
             // Important: apply all post-load actions
             ImportFormatPreferences importFormatPreferences = Globals.prefs.getImportFormatPreferences();
-            ParserResult result = OpenDatabase.loadDatabase(database.getDatabasePath().get(), importFormatPreferences, new DummyFileUpdateMonitor());
+            Path databasePath = null;
+            if (database.getDatabasePath().isPresent()) {
+                databasePath = database.getDatabasePath().get();
+            }
+            ParserResult result = OpenDatabase.loadDatabase(databasePath, importFormatPreferences, new DummyFileUpdateMonitor());
             BibDatabaseContext databaseOnDisk = result.getDatabaseContext();
 
             // Start looking at changes.

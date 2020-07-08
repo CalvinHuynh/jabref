@@ -425,28 +425,31 @@ public class ArgumentProcessor {
             // Set the global variable for this database's file directory before exporting,
             // so formatters can resolve linked files correctly.
             // (This is an ugly hack!)
-            File theFile = pr.getFile().get();
-            if (!theFile.isAbsolute()) {
-                theFile = theFile.getAbsoluteFile();
-            }
-            BibDatabaseContext databaseContext = pr.getDatabaseContext();
-            databaseContext.setDatabasePath(theFile.toPath());
-            Globals.prefs.fileDirForDatabase = databaseContext
-                    .getFileDirectories(Globals.prefs.getFilePreferences());
-            System.out.println(Localization.lang("Exporting") + ": " + data[0]);
-            Optional<Exporter> exporter = Globals.exportFactory.getExporterByName(data[1]);
-            if (!exporter.isPresent()) {
-                System.err.println(Localization.lang("Unknown export format") + ": " + data[1]);
-            } else {
-                // We have an exporter:
-                try {
-                    exporter.get().export(pr.getDatabaseContext(), Path.of(data[0]),
-                            pr.getDatabaseContext().getMetaData().getEncoding()
-                              .orElse(Globals.prefs.getDefaultEncoding()),
-                            pr.getDatabaseContext().getDatabase().getEntries());
-                } catch (Exception ex) {
-                    System.err.println(Localization.lang("Could not export file") + " '" + data[0] + "': "
-                            + Throwables.getStackTraceAsString(ex));
+
+            if (pr.getFile().isPresent()) {
+                File theFile = pr.getFile().get();
+                if (!theFile.isAbsolute()) {
+                    theFile = theFile.getAbsoluteFile();
+                }
+                BibDatabaseContext databaseContext = pr.getDatabaseContext();
+                databaseContext.setDatabasePath(theFile.toPath());
+                Globals.prefs.fileDirForDatabase = databaseContext
+                        .getFileDirectories(Globals.prefs.getFilePreferences());
+                System.out.println(Localization.lang("Exporting") + ": " + data[0]);
+                Optional<Exporter> exporter = Globals.exportFactory.getExporterByName(data[1]);
+                if (!exporter.isPresent()) {
+                    System.err.println(Localization.lang("Unknown export format") + ": " + data[1]);
+                } else {
+                    // We have an exporter:
+                    try {
+                        exporter.get().export(pr.getDatabaseContext(), Path.of(data[0]),
+                                pr.getDatabaseContext().getMetaData().getEncoding()
+                                  .orElse(Globals.prefs.getDefaultEncoding()),
+                                pr.getDatabaseContext().getDatabase().getEntries());
+                    } catch (Exception ex) {
+                        System.err.println(Localization.lang("Could not export file") + " '" + data[0] + "': "
+                                + Throwables.getStackTraceAsString(ex));
+                    }
                 }
             }
         }

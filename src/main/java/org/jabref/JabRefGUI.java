@@ -32,6 +32,7 @@ import impl.org.controlsfx.skin.DecorationPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 public class JabRefGUI {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JabRefGUI.class);
@@ -173,10 +174,12 @@ public class JabRefGUI {
         }
 
         for (ParserResult pr : failed) {
-            String message = Localization.lang("Error opening file '%0'.", pr.getFile().get().getName()) + "\n"
+            if (pr.getFile().isPresent()) {
+                String message = Localization.lang("Error opening file '%0'.", pr.getFile().get().getName()) + "\n"
                     + pr.getErrorMessage();
 
-            mainFrame.getDialogService().showErrorDialogAndWait(Localization.lang("Error opening file"), message);
+                mainFrame.getDialogService().showErrorDialogAndWait(Localization.lang("Error opening file"), message);
+            }
         }
 
         // Display warnings, if any

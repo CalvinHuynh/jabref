@@ -1061,7 +1061,8 @@ public class JabRefFrame extends BorderPane {
         for (BasePanel basePanel : getBasePanelList()) {
             // db file exists
             if (basePanel.getBibDatabaseContext().getDatabasePath().isPresent()) {
-                dbPaths.add(basePanel.getBibDatabaseContext().getDatabasePath().get().toAbsolutePath().toString());
+                Path databasePath = basePanel.getBibDatabaseContext().getDatabasePath().get();
+                dbPaths.add(databasePath.toAbsolutePath().toString());
             } else {
                 dbPaths.add("");
             }
@@ -1082,7 +1083,7 @@ public class JabRefFrame extends BorderPane {
             Optional<Path> file = getBasePanelAt(i).getBibDatabaseContext().getDatabasePath();
 
             if (file.isPresent()) {
-                if (!uniqPath.equals(file.get().getFileName()) && uniqPath.contains(File.separator)) {
+                if (!uniqPath.equals(file.get().getFileName().toString()) && uniqPath.contains(File.separator)) {
                     // remove filename
                     uniqPath = uniqPath.substring(0, uniqPath.lastIndexOf(File.separator));
                     tabbedPane.getTabs().get(i).setText(getBasePanelAt(i).getTabTitle() + " \u2014 " + uniqPath);

@@ -69,7 +69,14 @@ public class SendAsEMailAction extends SimpleCommand {
         }
 
         StringWriter rawEntries = new StringWriter();
+
         BibDatabaseContext databaseContext = stateManager.getActiveDatabase().get();
+        if (stateManager.getActiveDatabase().isPresent()) {
+            databaseContext = stateManager.getActiveDatabase().get();
+        } else {
+            return Localization.lang("Database is not active.");
+        }
+
         List<BibEntry> entries = stateManager.getSelectedEntries();
 
         // write the entries using sw, which is used later to form the email content
