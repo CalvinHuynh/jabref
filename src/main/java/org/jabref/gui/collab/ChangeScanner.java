@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.jabref.Globals;
 import org.jabref.logic.bibtex.comparator.BibDatabaseDiff;
@@ -39,9 +40,10 @@ public class ChangeScanner {
             // Parse the modified file
             // Important: apply all post-load actions
             ImportFormatPreferences importFormatPreferences = Globals.prefs.getImportFormatPreferences();
+            Optional<Path> optionalDatabasePath = database.getDatabasePath();
             Path databasePath = null;
-            if (database.getDatabasePath().isPresent()) {
-                databasePath = database.getDatabasePath().get();
+            if (optionalDatabasePath.isPresent()) {
+                databasePath = optionalDatabasePath.get();
             }
             ParserResult result = OpenDatabase.loadDatabase(databasePath, importFormatPreferences, new DummyFileUpdateMonitor());
             BibDatabaseContext databaseOnDisk = result.getDatabaseContext();

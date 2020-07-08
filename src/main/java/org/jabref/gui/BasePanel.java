@@ -533,9 +533,9 @@ public class BasePanel extends StackPane {
             }
         } else if (baseChanged && !nonUndoableChange) {
             baseChanged = false;
-            if (getBibDatabaseContext().getDatabasePath().isPresent()) {
-                Path databasePath = getBibDatabaseContext().getDatabasePath().get();
-                frame.setTabTitle(this, getTabTitle(), databasePath.toAbsolutePath().toString());
+            Optional<Path> databasePath = getBibDatabaseContext().getDatabasePath();
+            if (databasePath.isPresent()) {
+                frame.setTabTitle(this, getTabTitle(), databasePath.get().toAbsolutePath().toString());
             } else {
                 frame.setTabTitle(this, Localization.lang("untitled"), null);
             }

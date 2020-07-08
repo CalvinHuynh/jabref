@@ -7,6 +7,7 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.jabref.Globals;
 import org.jabref.gui.actions.ActionHelper;
@@ -70,9 +71,10 @@ public class SendAsEMailAction extends SimpleCommand {
 
         StringWriter rawEntries = new StringWriter();
 
-        BibDatabaseContext databaseContext = stateManager.getActiveDatabase().get();
-        if (stateManager.getActiveDatabase().isPresent()) {
-            databaseContext = stateManager.getActiveDatabase().get();
+        Optional<BibDatabaseContext> optiobalDatabaseContext = stateManager.getActiveDatabase();
+        BibDatabaseContext databaseContext = null;
+        if (optiobalDatabaseContext.isPresent()) {
+            databaseContext = optiobalDatabaseContext.get();
         } else {
             return Localization.lang("Database is not active.");
         }
