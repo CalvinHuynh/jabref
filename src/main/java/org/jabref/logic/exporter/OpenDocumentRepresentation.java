@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -56,8 +57,11 @@ class OpenDocumentRepresentation {
     public Document getDOMrepresentation() {
         Document result = null;
         try {
-            DocumentBuilder dbuild = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            result = dbuild.newDocument();
+            DocumentBuilderFactory dbuild = DocumentBuilderFactory.newInstance();
+            dbuild.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            dbuild.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+            DocumentBuilder builder = dbuild.newDocumentBuilder();
+            result = builder.newDocument();
             Element collection = result.createElement("office:document-content");
             // collection.setAttribute("xmlns", "http://openoffice.org/2000/office");
             collection.setAttribute("xmlns:office", "urn:oasis:names:tc:opendocument:xmlns:office:1.0");
