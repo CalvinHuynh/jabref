@@ -52,6 +52,7 @@ public class JabRefExecutorService {
         try {
             future.get();
         } catch (InterruptedException ignored) {
+            Thread.currentThread().interrupt();
             // Ignored
         } catch (ExecutionException e) {
             LOGGER.error("Problem executing command", e);
@@ -81,6 +82,7 @@ public class JabRefExecutorService {
             return executorService.invokeAll(tasks);
         } catch (InterruptedException exception) {
             // Ignored
+            Thread.currentThread().interrupt();
             return Collections.emptyList();
         }
     }
@@ -91,6 +93,7 @@ public class JabRefExecutorService {
             return executorService.invokeAll(tasks, timeout, timeUnit);
         } catch (InterruptedException exception) {
             // Ignored
+            Thread.currentThread().interrupt();
             return Collections.emptyList();
         }
     }
@@ -107,6 +110,7 @@ public class JabRefExecutorService {
             future.get();
         } catch (InterruptedException ignored) {
             // Ignored
+            Thread.currentThread().interrupt();
         } catch (ExecutionException e) {
             LOGGER.error("Problem executing command", e);
         }

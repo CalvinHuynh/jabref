@@ -90,8 +90,7 @@ public class ArgumentProcessor {
             result.setToOpenTab();
             return Optional.of(result);
         } catch (ParseException e) {
-            LOGGER.error("{} : {}", Localization.lang("Error occurred when parsing entry"), e.getLocalizedMessage());
-            // System.err.println(Localization.lang("Error occurred when parsing entry") + ": " + e.getLocalizedMessage());
+            LOGGER.error("Error occurred when parsing entry : {}", e.getLocalizedMessage());
             return Optional.empty();
         }
     }
@@ -106,8 +105,7 @@ public class ArgumentProcessor {
             try {
                 file = new URLDownload(address).toTemporaryFile();
             } catch (IOException e) {
-                LOGGER.error("{} {}: {}", Localization.lang("Problem downloading from"), address, e.getLocalizedMessage());
-                // System.err.println(Localization.lang("Problem downloading from %1", address) + e.getLocalizedMessage());
+                LOGGER.error("Problem downloading from {}: {}", address, e.getLocalizedMessage());
                 return Optional.empty();
             }
         } else {
@@ -138,25 +136,20 @@ public class ArgumentProcessor {
     private static Optional<ParserResult> importFile(Path file, String importFormat) {
         try {
             if (!"*".equals(importFormat)) {
-                LOGGER.info("{}: {}", Localization.lang("Importing"), file);
-                // System.out.println(Localization.lang("Importing") + ": " + file);
+                LOGGER.info("Importing: {}", file);
                 ParserResult result = Globals.IMPORT_FORMAT_READER.importFromFile(importFormat, file);
                 return Optional.of(result);
             } else {
                 // * means "guess the format":
-                LOGGER.info("{}: {}", Localization.lang("Importing in unknown format"), file);
-                // System.out.println(Localization.lang("Importing in unknown format") + ": " + file);
+                LOGGER.info("Importing in unknown format: {}", file);
 
                 ImportFormatReader.UnknownFormatImport importResult = Globals.IMPORT_FORMAT_READER.importUnknownFormat(file, Globals.getFileUpdateMonitor());
 
-                LOGGER.info("{}: {}", Localization.lang("Format used"), importResult.format);
-                // System.out.println(Localization.lang("Format used") + ": " + importResult.format);
+                LOGGER.info("Format used: {}", importResult.format);
                 return Optional.of(importResult.parserResult);
             }
         } catch (ImportException ex) {
-            LOGGER.error("{} '{}': {}", Localization.lang("Error opening file"), file, ex.getLocalizedMessage());
-            // System.err
-            //         .println(Localization.lang("Error opening file") + " '" + file + "': " + ex.getLocalizedMessage());
+            LOGGER.error("Error opening file '{}': {}", file, ex.getLocalizedMessage());
             return Optional.empty();
         }
     }
@@ -209,7 +202,6 @@ public class ArgumentProcessor {
                 }
             } else {
                 LOGGER.warn("{}", Localization.lang("The output option depends on a valid input option."));
-                // System.err.println(Localization.lang("The output option depends on a valid input option."));
             }
         }
 
@@ -227,7 +219,6 @@ public class ArgumentProcessor {
                 LOGGER.debug("Finished export");
             } else {
                 LOGGER.warn("{}", Localization.lang("The output option depends on a valid input option."));
-                // System.err.println(Localization.lang("The output option depends on a valid import option."));
             }
         }
 
@@ -282,12 +273,11 @@ public class ArgumentProcessor {
             // export new database
             Optional<Exporter> exporter = Globals.exportFactory.getExporterByName(formatName);
             if (!exporter.isPresent()) {
-                System.err.println(Localization.lang("Unknown export format") + ": " + formatName);
+                LOGGER.info("Unknown export format: {}", formatName);
             } else {
                 // We have an TemplateExporter instance:
                 try {
                     LOGGER.info("{} :{}", Localization.lang("Exporting") , data[1]);
-                    // System.out.println(Localization.lang("Exporting") + ": " + data[1]);
                     exporter.get().export(databaseContext, Path.of(data[1]),
                             databaseContext.getMetaData().getEncoding().orElse(Globals.prefs.getDefaultEncoding()),
                             matches);
@@ -298,7 +288,6 @@ public class ArgumentProcessor {
             }
         } else {
             LOGGER.warn(Localization.lang("No search matches."));
-            // System.err.println(Localization.lang("No search matches."));
         }
         return true;
     }
@@ -316,9 +305,6 @@ public class ArgumentProcessor {
             LOGGER.info("{}!", Localization.lang("no base-BibTeX-file specified"));
             LOGGER.info("{}:", Localization.lang("usage"));
             LOGGER.info("jabref --aux infile[.aux],outfile[.bib] base-BibTeX-file");
-            // System.out.println(Localization.lang("no base-BibTeX-file specified") + "!");
-            // System.out.println(Localization.lang("usage") + " :");
-            // System.out.println("jabref --aux infile[.aux],outfile[.bib] base-BibTeX-file");
         }
     }
 
@@ -390,7 +376,6 @@ public class ArgumentProcessor {
 
             if (!notSavedMsg) {
                 LOGGER.info(Localization.lang("no library generated"));
-                // System.out.println(Localization.lang("no library generated"));
             }
             return false;
         } else {
@@ -415,8 +400,7 @@ public class ArgumentProcessor {
                         + " " + fileWriter.getEncodingProblems());
             }
         } catch (IOException ex) {
-            LOGGER.error("{} \n {}", Localization.lang("Could not save file."), ex.getLocalizedMessage());
-            // System.err.println(Localization.lang("Could not save file.") + "\n" + ex.getLocalizedMessage());
+            LOGGER.error("Could not save file. \n {}", ex.getLocalizedMessage());
         }
     }
 
@@ -431,7 +415,6 @@ public class ArgumentProcessor {
                 }
             } else {
                 LOGGER.warn(Localization.lang("The output option depends on a valid import option."));
-                // System.err.println(Localization.lang("The output option depends on a valid import option."));
             }
         } else if (data.length == 2) {
             // This signals that the latest import should be stored in the given
@@ -451,11 +434,10 @@ public class ArgumentProcessor {
                 databaseContext.setDatabasePath(theFile.toPath());
                 Globals.prefs.fileDirForDatabase = databaseContext
                         .getFileDirectories(Globals.prefs.getFilePreferences());
-                System.out.println(Localization.lang("Exporting") + ": " + data[0]);
+                LOGGER.info("Exporting: {}", data[1]);
                 Optional<Exporter> exporter = Globals.exportFactory.getExporterByName(data[1]);
                 if (!exporter.isPresent()) {
-                    LOGGER.warn("{}: {}", Localization.lang("Unknown export format"), data[1]);
-                    // System.err.println(Localization.lang("Unknown export format") + ": " + data[1]);
+                    LOGGER.warn("Unknown export format: {}", data[1]);
                 } else {
                     // We have an exporter:
                     try {
@@ -464,9 +446,7 @@ public class ArgumentProcessor {
                                   .orElse(Globals.prefs.getDefaultEncoding()),
                                 pr.getDatabaseContext().getDatabase().getEntries());
                     } catch (Exception ex) {
-                        LOGGER.error("{} '{}'", Localization.lang("Could not export file"), data[0], ex);
-                        // System.err.println(Localization.lang("Could not export file") + " '" + data[0] + "': "
-                        //         + Throwables.getStackTraceAsString(ex));
+                        LOGGER.error("Could not export file: '{}'", data[0], ex);
                     }
                 }
             }
@@ -493,23 +473,19 @@ public class ArgumentProcessor {
         if ("all".equals(value.trim())) {
             try {
                 LOGGER.info(Localization.lang("Setting all preferences to default values."));
-                // System.out.println(Localization.lang("Setting all preferences to default values."));
                 Globals.prefs.clear();
                 new SharedDatabasePreferences().clear();
             } catch (BackingStoreException e) {
-                // System.err.println(Localization.lang("Unable to clear preferences."));
                 LOGGER.error("Unable to clear preferences", e);
             }
         } else {
             String[] keys = value.split(",");
             for (String key : keys) {
                 if (Globals.prefs.hasKey(key.trim())) {
-                    LOGGER.info("{} '{}'", Localization.lang("Resetting preference key '%0'"), key.trim());
-                    // System.out.println(Localization.lang("Resetting preference key '%0'", key.trim()));
+                    LOGGER.info("Resetting preference key '{}'", key.trim());
                     Globals.prefs.clear(key.trim());
                 } else {
-                    LOGGER.info("{} '{}'", Localization.lang("Unknown preference key '%0'"), key.trim());
-                    // System.out.println(Localization.lang("Unknown preference key '%0'", key.trim()));
+                    LOGGER.info("Unknown preference key '{}'", key.trim());
                 }
             }
         }
@@ -545,11 +521,7 @@ public class ArgumentProcessor {
      */
     private Optional<ParserResult> fetch(String fetchCommand) {
         if ((fetchCommand == null) || !fetchCommand.contains(":")) {
-            LOGGER.info("{} \n {}",
-                Localization.lang("Expected syntax for --fetch='<name of fetcher>:<query>'"),
-                Localization.lang("The following fetchers are available:"));
-            // System.out.println(Localization.lang("Expected syntax for --fetch='<name of fetcher>:<query>'"));
-            // System.out.println(Localization.lang("The following fetchers are available:"));
+            LOGGER.info("Expected syntax for --fetch='<name of fetcher>:<query>' \n The following fetchers are available:");
             return Optional.empty();
         }
 
@@ -562,31 +534,22 @@ public class ArgumentProcessor {
                                                                .filter(fetcher -> fetcher.getName().equalsIgnoreCase(engine))
                                                                .findFirst();
         if (!selectedFetcher.isPresent()) {
-            LOGGER.info("{} '{}'\n {}",
-                Localization.lang("Could not find fetcher"),
-                engine,
-                Localization.lang("The following fetchers are available:"));
-            // System.out.println(Localization.lang("Could not find fetcher '%0'", engine));
-
-            // System.out.println(Localization.lang("The following fetchers are available:"));
+            LOGGER.info("Could not find fetcher '{}'\n The following fetchers are available:",
+                engine);
             fetchers.forEach(fetcher -> LOGGER.info("  {}", fetcher.getName()));
 
             return Optional.empty();
         } else {
             String queryInfoMsg = Localization.lang("Running query '%0' with fetcher '%1'.", query, engine);
             LOGGER.info("{} \n {}", queryInfoMsg, Localization.lang("Please wait..."));
-            // System.out.println(Localization.lang("Running query '%0' with fetcher '%1'.", query, engine));
-            // System.out.print(Localization.lang("Please wait..."));
             try {
                 List<BibEntry> matches = selectedFetcher.get().performSearch(query);
                 if (matches.isEmpty()) {
                     LOGGER.warn("\r {}", Localization.lang("No results found."));
-                    // System.out.println("\r" + Localization.lang("No results found."));
                     return Optional.empty();
                 } else {
                     String foundResult = Localization.lang("Found %0 results.", String.valueOf(matches.size()));
                     LOGGER.warn("\r {}", foundResult);
-                    // System.out.println("\r" + Localization.lang("Found %0 results.", String.valueOf(matches.size())));
                     return Optional.of(new ParserResult(matches));
                 }
             } catch (FetcherException e) {
