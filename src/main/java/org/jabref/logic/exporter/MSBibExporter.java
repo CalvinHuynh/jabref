@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -46,7 +47,11 @@ class MSBibExporter extends Exporter {
             try {
                 DOMSource source = new DOMSource(msBibDatabase.getDomForExport());
                 StreamResult result = new StreamResult(ps);
-                Transformer trans = TransformerFactory.newInstance().newTransformer();
+                TransformerFactory transFac = TransformerFactory.newInstance();
+                transFac.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+                transFac.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+                
+                Transformer trans = transFac.newTransformer();
                 trans.setOutputProperty(OutputKeys.INDENT, "yes");
                 trans.transform(source, result);
             } catch (TransformerException | IllegalArgumentException | TransformerFactoryConfigurationError e) {

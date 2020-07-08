@@ -10,7 +10,7 @@ import org.mockito.Answers;
 
 import static org.mockito.Mockito.mock;
 
-public class SearchIsbnTest {
+class SearchIsbnTest {
 
     private BibEntry bibEntry;
     private IsbnFetcher fetcher;
@@ -31,7 +31,7 @@ public class SearchIsbnTest {
     }
     /* 
     @Test
-    public void searchByIsbnTest() throws FetcherException {
+    void searchByIsbnTest() throws FetcherException {
         Optional<BibEntry> fetchedEntry = fetcher.performSearchById("9781317356660");
         assertEquals(Optional.of(bibEntry), fetchedEntry);
     }

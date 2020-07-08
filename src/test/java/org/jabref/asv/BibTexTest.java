@@ -16,7 +16,7 @@ import org.mockito.Answers;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
-public class BibTexTest {
+class BibTexTest {
 
     private BibEntry bibEntry;
 
@@ -31,7 +31,7 @@ public class BibTexTest {
     }    
 
     @Test
-    public void testChangedValue() throws Exception {
+    void testChangedValue() throws Exception {
         bibEntry.setField(StandardField.KEYWORDS, "Shark, Fish");
         bibEntry.putKeywords(Arrays.asList("Dolphin", "Mamal"), ',');
         assertTrue(bibEntry.hasChanged());
@@ -39,7 +39,7 @@ public class BibTexTest {
     
     /* 
     @Test
-    public void testGenerateBibTex() throws IOException
+    void testGenerateBibTex() throws IOException
     {
         StringWriter bibTexOutput = new StringWriter();
         BibEntry bibEntry1 = new BibEntry();
@@ -65,7 +65,7 @@ public class BibTexTest {
 
 /* 
     @Test
-    public void testSpringerResults() throws FetcherException
+    void testSpringerResults() throws FetcherException
     {
         SpringerFetcher sf = new SpringerFetcher();
 

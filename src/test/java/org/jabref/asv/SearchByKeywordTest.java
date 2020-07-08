@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SearchByKeywordTest {
+class SearchByKeywordTest {
 
     @Test
-    public void searchResultTest() {
+    void searchResultTest() {
         BibEntry bibEntry1 = new BibEntry();
         BibDatabase bibDb = new BibDatabase();
 

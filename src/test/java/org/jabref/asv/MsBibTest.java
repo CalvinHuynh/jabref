@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MsBibTest {
+class MsBibTest {
 
     BibEntry convertedEntry;
     BibEntry notConvertedEntry;
@@ -26,7 +26,7 @@ public class MsBibTest {
     }
 
     @Test
-    public void MsBibTypeConversionTest() {
+    void MsBibTypeConversionTest() {
         convertedEntry.setField(StandardField.TITLE, "A new Article");
         convertedEntry.setType(StandardEntryType.Book);
         convertedMsBibEntry = MSBibConverter.convert(convertedEntry);
@@ -34,7 +34,7 @@ public class MsBibTest {
     }
 
     @Test
-    public void MsBibNoTypeConversionTest() {
+    void MsBibNoTypeConversionTest() {
         notConvertedEntry.setField(StandardField.TITLE, "A new Article");
         notConvertedMsBibEntry = MSBibConverter.convert(notConvertedEntry);
         assertEquals(StandardEntryType.Misc.getDisplayName(), notConvertedMsBibEntry.getType());
