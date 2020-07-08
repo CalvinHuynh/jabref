@@ -201,7 +201,7 @@ public class ArgumentProcessor {
                     return Collections.emptyList();
                 }
             } else {
-                LOGGER.warn("{}", Localization.lang("The output option depends on a valid input option."));
+                LOGGER.warn("The output option depends on a valid input option.");
             }
         }
 
@@ -218,7 +218,7 @@ public class ArgumentProcessor {
                 exportFile(loaded, cli.getFileExport().split(","));
                 LOGGER.debug("Finished export");
             } else {
-                LOGGER.warn("{}", Localization.lang("The output option depends on a valid input option."));
+                LOGGER.warn("The output option depends on a valid input option.");
             }
         }
 
@@ -277,7 +277,7 @@ public class ArgumentProcessor {
             } else {
                 // We have an TemplateExporter instance:
                 try {
-                    LOGGER.info("{} :{}", Localization.lang("Exporting") , data[1]);
+                    LOGGER.info("Exporting :{}", data[1]);
                     exporter.get().export(databaseContext, Path.of(data[1]),
                             databaseContext.getMetaData().getEncoding().orElse(Globals.prefs.getDefaultEncoding()),
                             matches);
@@ -287,7 +287,7 @@ public class ArgumentProcessor {
                 }
             }
         } else {
-            LOGGER.warn(Localization.lang("No search matches."));
+            LOGGER.warn("No search matches.");
         }
         return true;
     }
@@ -302,9 +302,7 @@ public class ArgumentProcessor {
         }
 
         if (usageMsg) {
-            LOGGER.info("{}!", Localization.lang("no base-BibTeX-file specified"));
-            LOGGER.info("{}:", Localization.lang("usage"));
-            LOGGER.info("jabref --aux infile[.aux],outfile[.bib] base-BibTeX-file");
+            LOGGER.info("no base-BibTeX-file specified! \n usage: jabref --aux infile[.aux],outfile[.bib] base-BibTeX-file");
         }
     }
 
@@ -375,7 +373,7 @@ public class ArgumentProcessor {
             }
 
             if (!notSavedMsg) {
-                LOGGER.info(Localization.lang("no library generated"));
+                LOGGER.info("no library generated");
             }
             return false;
         } else {
@@ -414,7 +412,7 @@ public class ArgumentProcessor {
                     saveDatabase(pr.getDatabase(), data[0]);
                 }
             } else {
-                LOGGER.warn(Localization.lang("The output option depends on a valid import option."));
+                LOGGER.warn("The output option depends on a valid import option.");
             }
         } else if (data.length == 2) {
             // This signals that the latest import should be stored in the given
@@ -472,7 +470,7 @@ public class ArgumentProcessor {
     private void resetPreferences(String value) {
         if ("all".equals(value.trim())) {
             try {
-                LOGGER.info(Localization.lang("Setting all preferences to default values."));
+                LOGGER.info("Setting all preferences to default values.");
                 Globals.prefs.clear();
                 new SharedDatabasePreferences().clear();
             } catch (BackingStoreException e) {
@@ -494,7 +492,7 @@ public class ArgumentProcessor {
     private void automaticallySetFileLinks(List<ParserResult> loaded) {
         for (ParserResult parserResult : loaded) {
             BibDatabase database = parserResult.getDatabase();
-            LOGGER.info(Localization.lang("Automatically setting file links"));
+            LOGGER.info("Automatically setting file links");
             AutoSetFileLinksUtil util = new AutoSetFileLinksUtil(parserResult.getDatabaseContext(), Globals.prefs.getFilePreferences(), Globals.prefs.getAutoLinkPreferences(), ExternalFileTypes.getInstance());
             util.linkAssociatedFiles(database.getEntries(), new NamedCompound(""));
         }
@@ -504,7 +502,7 @@ public class ArgumentProcessor {
         for (ParserResult parserResult : loaded) {
             BibDatabase database = parserResult.getDatabase();
 
-            LOGGER.info(Localization.lang("Regenerating citation keys according to metadata"));
+            LOGGER.info("Regenerating citation keys according to metadata");
 
             CitationKeyGenerator keyGenerator = new CitationKeyGenerator(parserResult.getDatabaseContext(), Globals.prefs.getCitationKeyPatternPreferences());
             for (BibEntry entry : database.getEntries()) {
@@ -545,7 +543,7 @@ public class ArgumentProcessor {
             try {
                 List<BibEntry> matches = selectedFetcher.get().performSearch(query);
                 if (matches.isEmpty()) {
-                    LOGGER.warn("\r {}", Localization.lang("No results found."));
+                    LOGGER.warn("\r No results found.");
                     return Optional.empty();
                 } else {
                     String foundResult = Localization.lang("Found %0 results.", String.valueOf(matches.size()));

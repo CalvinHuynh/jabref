@@ -1,14 +1,18 @@
 package org.jabref.asv;
 
+import org.jabref.logic.importer.FetcherException;
 import org.jabref.logic.importer.ImportFormatPreferences;
 import org.jabref.logic.importer.fetcher.IsbnFetcher;
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.field.StandardField;
-
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Answers;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+
+import java.util.Optional;
 
 class SearchIsbnTest {
 
@@ -29,11 +33,10 @@ class SearchIsbnTest {
         bibEntry.setField(StandardField.YEAR, "2018");
         bibEntry.setField(StandardField.URL, "https://www.ebook.de/de/product/30052873/david_miles_huber_robert_e_runstein_modern_recording_techniques.html?internal-rewrite=true");
     }
-    /* 
+    
     @Test
     void searchByIsbnTest() throws FetcherException {
         Optional<BibEntry> fetchedEntry = fetcher.performSearchById("9781317356660");
         assertEquals(Optional.of(bibEntry), fetchedEntry);
     }
-    */
 }
