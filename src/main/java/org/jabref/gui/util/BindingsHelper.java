@@ -43,7 +43,7 @@ public class BindingsHelper {
     }
 
     public static <T, U> ObservableList<U> map(ObservableValue<T> source, Function<T, List<U>> mapper) {
-        PreboundBinding<List<U>> binding = new PreboundBinding<List<U>>(source) {
+        PreboundBinding<List<U>> binding = new PreboundBinding<>(source) {
 
             @Override
             protected List<U> computeValue() {
@@ -135,7 +135,7 @@ public class BindingsHelper {
     }
 
     public static <T> ObservableValue<T> constantOf(T value) {
-        return new ObjectBinding<T>() {
+        return new ObjectBinding<>() {
 
             @Override
             protected T computeValue() {

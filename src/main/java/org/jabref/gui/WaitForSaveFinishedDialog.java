@@ -19,7 +19,7 @@ public class WaitForSaveFinishedDialog {
 
     public void showAndWait(List<BasePanel> basePanels) {
         if (basePanels.stream().anyMatch(BasePanel::isSaving)) {
-            Task<Void> waitForSaveFinished = new Task<Void>() {
+            Task<Void> waitForSaveFinished = new Task<>() {
                 @Override
                 protected Void call() throws Exception {
                     while (basePanels.stream().anyMatch(BasePanel::isSaving)) {

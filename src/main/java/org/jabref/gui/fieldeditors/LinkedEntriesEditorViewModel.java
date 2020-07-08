@@ -49,7 +49,7 @@ public class LinkedEntriesEditorViewModel extends AbstractEditorViewModel {
     }
 
     public StringConverter<ParsedEntryLink> getStringConverter() {
-        return new StringConverter<ParsedEntryLink>() {
+        return new StringConverter<>() {
 
             @Override
             public String toString(ParsedEntryLink linkedEntry) {

@@ -67,7 +67,7 @@ public class ViewModelTreeCellFactory<T> implements Callback<TreeView<T>, TreeCe
                     return null;
                 };
 
-        StringConverter<TreeItem<T>> converter = new StringConverter<TreeItem<T>>() {
+        StringConverter<TreeItem<T>> converter = new StringConverter<>() {
             @Override
             public String toString(TreeItem<T> treeItem) {
                 return (treeItem == null || treeItem.getValue() == null || toText == null) ?

@@ -53,7 +53,7 @@ public class AutoLinkFilesAction extends SimpleCommand {
 
         final NamedCompound nc = new NamedCompound(Localization.lang("Automatically set file links"));
         AutoSetFileLinksUtil util = new AutoSetFileLinksUtil(database, preferences.getFilePreferences(), preferences.getAutoLinkPreferences(), ExternalFileTypes.getInstance());
-        Task<List<BibEntry>> linkFilesTask = new Task<List<BibEntry>>() {
+        Task<List<BibEntry>> linkFilesTask = new Task<>() {
 
             @Override
             protected List<BibEntry> call() {

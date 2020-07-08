@@ -22,7 +22,7 @@ public class MonthEditorViewModel extends OptionEditorViewModel<Month> {
 
     @Override
     public StringConverter<Month> getStringConverter() {
-        return new StringConverter<Month>() {
+        return new StringConverter<>() {
             @Override
             public String toString(Month object) {
                 if (object == null) {
