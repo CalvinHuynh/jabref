@@ -59,8 +59,8 @@ class OOCalcDatabase {
         Document result = null;
         try {
             DocumentBuilderFactory dbuild = DocumentBuilderFactory.newInstance();
-            dbuild.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, ""); // Compliant
-            dbuild.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, ""); // compliant
+            dbuild.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            dbuild.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
             DocumentBuilder builder = dbuild.newDocumentBuilder();
             result = builder.newDocument();
             Element collection = result.createElement("office:document-content");
