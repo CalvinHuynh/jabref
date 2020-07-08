@@ -4,7 +4,7 @@ import org.jabref.logic.msbib.MSBibConverter;
 import org.jabref.logic.msbib.MSBibEntry;
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.field.StandardField;
-
+import org.jabref.model.entry.types.StandardEntryType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,30 +12,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MsBibTest {
 
-    BibEntry entry;
-    BibEntry entry1;
-    MSBibEntry msBibEntry;
-    MSBibEntry msBibEntry1;
+    BibEntry convertedEntry;
+    BibEntry notConvertedEntry;
+    MSBibEntry convertedMsBibEntry;
+    MSBibEntry notConvertedMsBibEntry;
 
     @BeforeEach
     public void setup() {
-        entry = new BibEntry();
-        entry1 = new BibEntry();
-        msBibEntry = new MSBibEntry();
-        msBibEntry1 = new MSBibEntry();
+        convertedEntry = new BibEntry();
+        notConvertedEntry = new BibEntry();
+        convertedMsBibEntry = new MSBibEntry();
+        notConvertedMsBibEntry = new MSBibEntry();
     }
 
     @Test
     public void MsBibTypeConversionTest() {
-        entry1.setField(StandardField.TITLE, "A new Article");
-        msBibEntry1 = MSBibConverter.convert(entry1);
-        assertEquals("Misc", msBibEntry1.getType());
+        convertedEntry.setField(StandardField.TITLE, "A new Article");
+        convertedEntry.setType(StandardEntryType.Book);
+        convertedMsBibEntry = MSBibConverter.convert(convertedEntry);
+        assertEquals(StandardEntryType.Book, convertedMsBibEntry.getType());
     }
 
     @Test
     public void MsBibNoTypeConversionTest() {
-        entry.setField(StandardField.TITLE, "A new Article");
-        msBibEntry = MSBibConverter.convert(entry);
-        assertEquals("Misc", msBibEntry.getType());
+        notConvertedEntry.setField(StandardField.TITLE, "A new Article");
+        notConvertedMsBibEntry = MSBibConverter.convert(notConvertedEntry);
+        assertEquals(StandardEntryType.Misc, notConvertedMsBibEntry.getType());
     }
 }
