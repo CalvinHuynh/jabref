@@ -30,13 +30,13 @@ public class MsBibTest {
         convertedEntry.setField(StandardField.TITLE, "A new Article");
         convertedEntry.setType(StandardEntryType.Book);
         convertedMsBibEntry = MSBibConverter.convert(convertedEntry);
-        assertEquals(StandardEntryType.Book, convertedMsBibEntry.getType());
+        assertEquals(StandardEntryType.Book.getDisplayName(), convertedMsBibEntry.getType());
     }
 
     @Test
     public void MsBibNoTypeConversionTest() {
         notConvertedEntry.setField(StandardField.TITLE, "A new Article");
         notConvertedMsBibEntry = MSBibConverter.convert(notConvertedEntry);
-        assertEquals(StandardEntryType.Misc, notConvertedMsBibEntry.getType());
+        assertEquals(StandardEntryType.Misc.getDisplayName(), notConvertedMsBibEntry.getType());
     }
 }

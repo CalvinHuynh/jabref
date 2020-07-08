@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -61,11 +62,14 @@ public class CitationStyle {
     private static Optional<CitationStyle> createCitationStyleFromSource(final String source, final String filename) {
         if ((filename != null) && !filename.isEmpty() && (source != null) && !source.isEmpty()) {
             try {
-                DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                DocumentBuilderFactory db = DocumentBuilderFactory.newInstance();
+                db.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+                db.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+                DocumentBuilder builder = db.newDocumentBuilder();
                 InputSource is = new InputSource();
                 is.setCharacterStream(new StringReader(stripInvalidProlog(source)));
 
-                Document doc = db.parse(is);
+                Document doc = builder.parse(is);
                 NodeList nodes = doc.getElementsByTagName("info");
 
                 NodeList titleNode = ((Element) nodes.item(0)).getElementsByTagName("title");
