@@ -92,7 +92,6 @@ public class JabRefExecutorService {
         try {
             return executorService.invokeAll(tasks, timeout, timeUnit);
         } catch (InterruptedException exception) {
-            // Ignored
             Thread.currentThread().interrupt();
             return Collections.emptyList();
         }

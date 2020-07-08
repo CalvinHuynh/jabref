@@ -1,5 +1,8 @@
 package org.jabref.asv;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+
 import java.util.Optional;
 
 import org.jabref.logic.importer.FetcherException;
