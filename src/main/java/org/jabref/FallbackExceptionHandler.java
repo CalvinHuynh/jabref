@@ -18,7 +18,7 @@ public class FallbackExceptionHandler implements Thread.UncaughtExceptionHandler
 
     @Override
     public void uncaughtException(Thread thread, Throwable exception) {
-        LOGGER.error("Uncaught exception occurred in " + thread, exception);
+        LOGGER.error("Uncaught exception occurred in {}", thread, exception);
 
         DefaultTaskExecutor.runInJavaFXThread(() ->
                 JabRefGUI.getMainFrame()

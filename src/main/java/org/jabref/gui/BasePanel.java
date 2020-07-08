@@ -531,7 +531,7 @@ public class BasePanel extends StackPane {
             if (!baseChanged) {
                 markBaseChanged();
             }
-        } else if (baseChanged && !nonUndoableChange) {
+        } else if (baseChanged && !nonUndoableChange) { 
             baseChanged = false;
             Optional<Path> databasePath = getBibDatabaseContext().getDatabasePath();
             if (databasePath.isPresent()) {

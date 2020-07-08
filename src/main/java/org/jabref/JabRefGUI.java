@@ -265,7 +265,8 @@ public class JabRefGUI {
                     Globals.prefs.getImportFormatPreferences(), Globals.getFileUpdateMonitor());
 
             if (parsedDatabase.isEmpty()) {
-                LOGGER.error(Localization.lang("Error opening file") + " '" + dbFile.getPath() + "'");
+                String errorMsg = Localization.lang("Error opening file '%s'");
+                LOGGER.error(String.format(errorMsg, dbFile.getPath()));
             } else {
                 bibDatabases.add(parsedDatabase);
             }
